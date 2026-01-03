@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:study_case/app/style/color_pallete.dart';
@@ -18,7 +17,7 @@ class HomeOutletPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(FormOutletPage()),
         backgroundColor: colorPrimary,
-        child: Icon(Icons.add, color: colorAccent,),
+        child: Icon(Icons.add, color: colorAccent),
       ),
       body: Column(
         children: [
@@ -27,6 +26,7 @@ class HomeOutletPage extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
+              suffixIcon: Icon(Icons.search),
             ),
             onChanged: (value) => controller.searchOutlet(value),
           ),
@@ -65,7 +65,40 @@ class HomeOutletPage extends StatelessWidget {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       var element = items[index];
-                      return Card(child: Text(element['name']));
+                      return Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${element['name'].toString().toUpperCase()} - ${element['type_business']}',
+                              style: TextStyle(
+                                color: colorPrimary,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.visibility,
+                                    color: colorPrimary,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () => context.read<HomeController>().actionDelete(context, items[index].id),
+                                  icon: Icon(Icons.delete, color: colorRed),
+                                ),
+                                IconButton(
+                                  onPressed: () => Get.to(FormOutletPage()),
+                                  icon: Icon(Icons.edit, color: colorGreen),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
                     },
                   ),
                 );

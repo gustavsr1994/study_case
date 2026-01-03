@@ -6,6 +6,7 @@ import 'package:study_case/view/controller/home_controller.dart';
 import 'package:study_case/view/pages/home_outlet_page.dart';
 
 import 'firebase_options.dart';
+import 'view/controller/form_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeController()),
+        ChangeNotifierProvider(create: (context) => FormController()),
+
       ],
       child: GetMaterialApp(title: 'Flutter Demo', home: HomeOutletPage()),
     );

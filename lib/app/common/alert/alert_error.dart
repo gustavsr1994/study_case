@@ -13,6 +13,7 @@ class AlertError {
       context: context,
       dialogType: DialogType.error,
       title: title,
+      titleTextStyle: TextStyle(color: colorRed),
       body: Text(body, style: TextStyle(fontSize: 14, color: colorRed)),
     ).show();
   }

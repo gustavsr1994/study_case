@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:study_case/app/style/color_pallete.dart';
 
 class AlertSuccess {
@@ -13,6 +14,10 @@ class AlertSuccess {
       dialogType: DialogType.success,
       title: title,
       body: Text(body, style: TextStyle(fontSize: 14, color: colorPrimary)),
+      btnOk: ElevatedButton(onPressed: () {
+        Get.back();
+        Get.back();
+      }, child: Text('Ok')),
     ).show();
   }
 }
