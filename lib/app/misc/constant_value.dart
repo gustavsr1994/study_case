@@ -1,0 +1,1 @@
+List<String> listBusinessType = ['Cafe','Restaurant','Sport','Bar'];
