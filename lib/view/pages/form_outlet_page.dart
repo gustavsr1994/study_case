@@ -7,7 +7,7 @@ import 'package:study_case/view/pages/map_outlet_page.dart';
 
 class FormOutletPage extends StatefulWidget {
   final String idDoc;
-  const FormOutletPage(this.idDoc,{super.key});
+  const FormOutletPage(this.idDoc, {super.key});
 
   @override
   State<FormOutletPage> createState() => _FormOutletPageState();
@@ -17,8 +17,9 @@ class _FormOutletPageState extends State<FormOutletPage> {
   @override
   void initState() {
     super.initState();
-    context.read<FormController>().initialForm(idDoc);
+    context.read<FormController>().initialForm(widget.idDoc);
   }
+
   @override
   Widget build(BuildContext context) {
     var controller = context.watch<FormController>();
@@ -60,7 +61,8 @@ class _FormOutletPageState extends State<FormOutletPage> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         suffixIcon: IconButton(
-                          onPressed: () => controller.showTimeSelect(context, 0),
+                          onPressed: () =>
+                              controller.showTimeSelect(context, 0),
                           icon: Icon(Icons.watch_later_outlined),
                         ),
                       ),
@@ -77,7 +79,8 @@ class _FormOutletPageState extends State<FormOutletPage> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         suffixIcon: IconButton(
-                          onPressed: () => controller.showTimeSelect(context, 1),
+                          onPressed: () =>
+                              controller.showTimeSelect(context, 1),
                           icon: Icon(Icons.watch_later_outlined),
                         ),
                       ),
@@ -119,7 +122,8 @@ class _FormOutletPageState extends State<FormOutletPage> {
                           ),
                         )
                         .toList(),
-                    onChanged: (value) => controller.actionSelectBusiness(value!),
+                    onChanged: (value) =>
+                        controller.actionSelectBusiness(value!),
                   ),
                 ],
               ),
@@ -142,7 +146,10 @@ class _FormOutletPageState extends State<FormOutletPage> {
                           (element) => CheckboxListTile(
                             value: element['isSelected'],
                             title: Text(element['value']),
-                            onChanged: (value) => controller.actionCheckSelect(element['value'], value!),
+                            onChanged: (value) => controller.actionCheckSelect(
+                              element['value'],
+                              value!,
+                            ),
                           ),
                         )
                         .toList(),
@@ -175,11 +182,19 @@ class _FormOutletPageState extends State<FormOutletPage> {
             Row(
               children: [
                 Text('Close'),
-                Switch(value: controller.isOpen, onChanged: (value) => controller.changeStatusOpen()),
+                Switch(
+                  value: controller.isOpen,
+                  onChanged: (value) => controller.changeStatusOpen(),
+                ),
                 Text('Open'),
               ],
             ),
-            ElevatedButton(onPressed: () => controller.actionSubmit(context), child: Text("Submit")),
+            ElevatedButton(
+              onPressed: () => widget.idDoc == "0"
+                  ? controller.actionSubmit(context)
+                  : controller.actionSubmitUpdate(context, widget.idDoc),
+              child: Text(widget.idDoc == "0" ? "Submit" : "Update"),
+            ),
           ],
         ),
       ),

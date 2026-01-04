@@ -15,7 +15,7 @@ class HomeOutletPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Daftar Outlet")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(FormOutletPage()),
+        onPressed: () => Get.to(FormOutletPage("0")),
         backgroundColor: colorPrimary,
         child: Icon(Icons.add, color: colorAccent),
       ),
@@ -80,18 +80,18 @@ class HomeOutletPage extends StatelessWidget {
                             Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () => controller.actionViewDetail(element.id),
                                   icon: Icon(
                                     Icons.visibility,
                                     color: colorPrimary,
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () => context.read<HomeController>().actionDelete(context, items[index].id),
+                                  onPressed: () => context.read<HomeController>().actionDelete(context, element.id),
                                   icon: Icon(Icons.delete, color: colorRed),
                                 ),
                                 IconButton(
-                                  onPressed: () => Get.to(FormOutletPage()),
+                                  onPressed: () => Get.to(FormOutletPage(element.id)),
                                   icon: Icon(Icons.edit, color: colorGreen),
                                 ),
                               ],

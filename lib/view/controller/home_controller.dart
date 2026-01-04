@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:study_case/app/common/alert/alert_warning.dart';
 import 'package:study_case/data/outlet_data_source.dart';
+import 'package:study_case/entity/detail_entity.dart';
+import 'package:study_case/view/pages/detail_outlet_page.dart';
 
 class HomeController extends ChangeNotifier {
   String keywordSearch = '';
@@ -42,5 +46,25 @@ class HomeController extends ChangeNotifier {
         "Error: ${e.toString()}",
       );
     }
+  }
+
+  void actionViewDetail(String idDoc) async {
+    var result = await _dataSource.detailOutlet(idDoc);
+    var position = result['position'] as GeoPoint;
+
+    List<String> facilities = [];
+    for (var element in result['facilities']) {
+      facilities.add(element);
+    }
+    DetailEntity entity = DetailEntity(
+      result['name'],
+      result['type_business'],
+      result['description'],
+      LatLng(position.latitude, position.longitude),
+      result['hour_operation']['open'],
+      result['hour_operation']['close'],
+      facilities,
+    );
+    Get.to(DetailOutletPage(entity));
   }
 }

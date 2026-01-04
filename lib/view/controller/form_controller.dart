@@ -97,6 +97,37 @@ class FormController extends ChangeNotifier {
     }
   }
 
+  void actionSubmitUpdate(BuildContext context, String idDoc) async {
+    if (formKey.currentState!.validate()) {
+      var request = {
+        'name': nameField.text,
+        'hour_operation': {
+          'open': openOutletField.text,
+          'close': closeOutletField.text,
+        },
+        'type_business': businessSelected,
+        'facilities': listFacility
+            .where((element) => element['isSelected'] == true)
+            .map((item) => item['value'])
+            .toList(),
+        'is_open': isOpen,
+        'description': descriptionField.text,
+        'position': GeoPoint(
+          double.parse(locationField.text.split(';').first),
+          double.parse(locationField.text.split(';').last),
+        ),
+      };
+      await _outletDataSource.updateOutlet(idDoc, request);
+      AlertSuccess().showAlert(
+        context,
+        "Success Submit",
+        "Submited have success",
+      );
+    } else {
+      AlertError().showAlert(context, "Check Form", "Please, check all field");
+    }
+  }
+
   void initialForm(String idDoc) async {
     if (idDoc == "0") {
       nameField.clear();
@@ -125,6 +156,9 @@ class FormController extends ChangeNotifier {
                 .first['isSelected'] =
             true;
       }
+      var position = result['position'] as GeoPoint;
+      locationField.text = '${position.latitude};${position.longitude}';
+      isOpen = result['is_open'];
     }
     notifyListeners();
   }
